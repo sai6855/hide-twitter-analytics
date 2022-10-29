@@ -7,12 +7,11 @@ require("dotenv").config(".env");
 app.use(express.json());
 connectDB();
 
-
-app.get("/text/:username", async(req, res) => {
+app.get("/text/:username", async (req, res) => {
   try {
-    const data = await textModal.findOne({ username:req.params.username });
+    const data = await textModal.findOne({ username: req.params.username });
     if (!data) {
-     return res.status(404).json({ message: "user not found" });
+      return res.status(404).json({ message: "user not found" });
     }
     res.status(200).json({ message: data.text });
   } catch (e) {
@@ -20,16 +19,27 @@ app.get("/text/:username", async(req, res) => {
   }
 });
 
-
-
 app.post("/text", async (req, res) => {
   try {
     const { username, text } = req.body;
 
+    if (!username) {
+      return res.status(404).json({ message: "username required" });
+    }
+
+    if (!text) {
+      return res.status(404).json({ message: "text required" });
+    }
+
+    if (text.length > 30000) {
+      return res
+        .status(404)
+        .json({ message: "maximum 30,000 characters allowed for text " });
+    }
+
     const data = await textModal.findOne({ username });
     if (!data) {
-     return res.status(404).json({ message: "user not found" });
-
+      return res.status(404).json({ message: "user not found" });
     }
     await textModal.findByIdAndUpdate(data._id, { text });
     res.status(200).json({ message: "copied!!" });
@@ -42,8 +52,13 @@ app.post("/create-user", async (req, res) => {
   try {
     const { username } = req.body;
     const data = await textModal.findOne({ username });
+    if (username.length > 40) {
+      return res
+        .status(404)
+        .json({ message: "maximum 40 characters allowed for username " });
+    }
     if (data) {
-     return res.status(404).json({
+      return res.status(404).json({
         message:
           "user already exists with the specified username, please try with another username.",
       });
