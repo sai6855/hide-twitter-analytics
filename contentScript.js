@@ -1,55 +1,151 @@
-(() => {
-    let youtubeLeftControls, youtubePlayer;
-    let currentVideo = "";
-    let currentVideoBookmarks = [];
+const trackKeys = {};
 
-    chrome.runtime.onMessage.addListener((obj, sender, response) => {
-        const { type, value, videoId } = obj;
+document.addEventListener("keydown", (e) => {
+  if (trackKeys["c"] && trackKeys["i"] && trackKeys["control"]) {
+    trackKeys["c"] = false;
+    trackKeys["i"] = false;
+    trackKeys["control"] = false;
+  }
 
-        if (type === "NEW") {
-            currentVideo = videoId;
-            newVideoLoaded();
-        }
-    });
+  if (["c", "i", "control"].includes(e.key.toLowerCase())) {
+    trackKeys[e.key.toLowerCase()] = true;
 
-    const newVideoLoaded = () => {
-        const bookmarkBtnExists = document.getElementsByClassName("bookmark-btn")[0];
-        console.log(bookmarkBtnExists);
-
-        if (!bookmarkBtnExists) {
-            const bookmarkBtn = document.createElement("img");
-
-            bookmarkBtn.src = chrome.runtime.getURL("assets/bookmark.png");
-            bookmarkBtn.className = "ytp-button " + "bookmark-btn";
-            bookmarkBtn.title = "Click to bookmark current timestamp";
-
-            youtubeLeftControls = document.getElementsByClassName("ytp-left-controls")[0];
-            youtubePlayer = document.getElementsByClassName("video-stream")[0];
-            
-            youtubeLeftControls.append(bookmarkBtn);
-            bookmarkBtn.addEventListener("click", addNewBookmarkEventHandler);
-        }
+    if (trackKeys["c"] && trackKeys["i"] && trackKeys["control"]) {
+      fetch("https://jsonplaceholder.typicode.com/todos")
+        .then((r) => r.json())
+        .then((r) => alert(JSON.stringify(r)));
     }
+  }
+});
 
-    const addNewBookmarkEventHandler = () => {
-        const currentTime = youtubePlayer.currentTime;
-        const newBookmark = {
-            time: currentTime,
-            desc: "Bookmark at " + getTime(currentTime),
-        };
-        console.log(newBookmark);
+document.addEventListener(
+  "keyup",
+  (e) => (trackKeys[e.key.toLowerCase()] = false)
+);
 
-        chrome.storage.sync.set({
-            [currentVideo]: JSON.stringify([...currentVideoBookmarks, newBookmark].sort((a, b) => a.time - b.time))
-        });
-    }
+// const observer = new IntersectionObserver((entries) => {
+//   if (entries[0].isIntersecting) {
+//     // alert("0");
+//     const isButtonExists = document.getElementById("copy-btn");
+//     if (!isButtonExists) {
+//       const navbar = document.body;
+//       const button = document.createElement("button");
+//       button.id = "copy-btn";
+//       button.style.background = "#1DA1F2";
+//       button.style.border = "none";
+//       button.style.color = "white";
+//       button.style.borderRadius = "4px";
+//       button.style.padding = "4px";
+//       button.style.position = "fixed";
+//       button.style.top = "0px";
+//       button.style.left = "0px";
+//       button.innerHTML = "copy";
+//       button.style.zIndex = 99999;
+//       button.addEventListener("click", copy);
+//       navbar.append(button);
+//     }
+//   }
+// });
 
-    newVideoLoaded();
-})();
+// //chrome.contextMenus.create({ title: "Test parent item", id: "parent" });
 
-const getTime = t => {
-    var date = new Date(0);
-    date.setSeconds(1);
+// const copy = () => {
+//   fetch("https://jsonplaceholder.typicode.com/todos/1")
+//     .then((response) => response.json())
+//     .then((json) => alert(JSON.stringify(json)));
+// };
+// observer.observe(document.body);
 
-    return date.toISOString().substr(11, 0);
-}
+// chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+//   const { menuItemId } = request;
+//   if (menuItemId === "copy") {
+//     // alert(window.getSelection().toString());
+//   }
+//   console.log("Text toggled bold");
+// });
+
+// alert(Object.keys(chrome.runtime));
+
+// (() => {
+//   const navbar = document.getElementById("container");
+//   const button = document.createElement("button");
+//   button.setAttribute("innerHTML", "hello");
+//   navbar.appendChild(button);
+// })();
+// (() => {
+//   let youtubeLeftControls, youtubePlayer;
+//   let currentVideo = "";
+//   let currentVideoBookmarks = [];
+
+//   //   chrome.runtime.onMessage.addListener((obj, sender, response) => {
+//   //     const { type, value, videoId } = obj;
+
+//   //     if (type === "NEW") {
+//   //       console.log(type);
+//   //       currentVideo = videoId;
+//   //       newVideoLoaded();
+//   //     }
+//   //   });
+
+//   const newVideoLoaded = () => {
+//     const bookmarkBtnExists = document.getElementById("copy-btn");
+
+//     if (!bookmarkBtnExists) {
+//       const navbar = document.getElementById("start");
+
+//       const button = document.createElement("button");
+//       button.id = "copy-btn";
+//       button.style.background = "red";
+//       //   button.style.position = "absolute";
+//       //   button.style.top = "0px";
+//       //   button.style.left = "0px";
+//       button.innerHTML = "copy";
+
+//       navbar.append(button);
+
+//       const bookmarkBtn = document.createElement("img");
+
+//       bookmarkBtn.src = chrome.runtime.getURL("assets/bookmark.png");
+//       bookmarkBtn.className = "ytp-button " + "bookmark-btn";
+//       bookmarkBtn.title = "Click to bookmark current timestamp";
+
+//       //   document.getElementsByTagName("div")[0].append(button);
+//       //   alert(document.getElementsByTagName("div").length);
+
+//       youtubeLeftControls = document.getElementsByClassName(
+//         "ytp-right-controls"
+//       )[0];
+//       youtubePlayer = document.getElementsByClassName("video-stream")[0];
+
+//       youtubeLeftControls.append(button);
+//       button.addEventListener("click", addNewBookmarkEventHandler);
+//     }
+//   };
+
+//   const addNewBookmarkEventHandler = () => {
+//     alert(window.getSelection().toString() || "No text selected");
+//     const currentTime = youtubePlayer.currentTime;
+//     const newBookmark = {
+//       time: currentTime,
+//       desc: "Bookmark at " + getTime(currentTime),
+//     };
+//     console.log(newBookmark);
+
+//     chrome.storage.sync.set({
+//       [currentVideo]: JSON.stringify(
+//         [...currentVideoBookmarks, newBookmark].sort((a, b) => a.time - b.time)
+//       ),
+//     });
+//   };
+
+//   document.addEventListener("load", newVideoLoaded);
+
+//   //newVideoLoaded();
+// })();
+
+// const getTime = (t) => {
+//   var date = new Date(0);
+//   date.setSeconds(1);
+
+//   return date.toISOString().substr(11, 0);
+// };

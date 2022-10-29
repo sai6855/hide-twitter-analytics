@@ -1,0 +1,26 @@
+{
+  "name": "copy-paste-anywhere",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sai6855/youtube-bookmarker-starter-code.git"
+  },
+  "author": "sai6855",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sai6855/youtube-bookmarker-starter-code/issues"
+  },
+  "homepage": "https://github.com/sai6855/youtube-bookmarker-starter-code#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.1.2"
+  }
+}
