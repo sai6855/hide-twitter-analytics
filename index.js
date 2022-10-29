@@ -5,6 +5,7 @@ const port = 3000;
 const textModal = require("./db/model.js");
 require("dotenv").config(".env");
 app.use(express.json());
+app.use(require("cors")());
 connectDB();
 
 app.get("/text/:username", async (req, res) => {
@@ -21,7 +22,7 @@ app.get("/text/:username", async (req, res) => {
 
 app.post("/text", async (req, res) => {
   try {
-    const { username, text } = req.body
+    const { username, text } = req.body;
 
     if (!username) {
       return res.status(404).json({ message: "username required" });
