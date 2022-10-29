@@ -1,10 +1,62 @@
 const express = require("express");
+const connectDB = require("./db/db.js");
 const app = express();
 const port = 3000;
+const textModal = require("./db/model.js");
+require("dotenv").config(".env");
+app.use(express.json());
+connectDB();
 
-app.get("/", (req, res) => {
-  console.log("GET");
-  res.send("Hello World!");
+
+app.get("/text/:username", async(req, res) => {
+  try {
+    const data = await textModal.findOne({ username:req.params.username });
+    if (!data) {
+     return res.status(404).json({ message: "user not found" });
+    }
+    res.status(200).json({ message: data.text });
+  } catch (e) {
+    throw error;
+  }
+});
+
+
+
+app.post("/text", async (req, res) => {
+  try {
+    const { username, text } = req.body;
+
+    const data = await textModal.findOne({ username });
+    if (!data) {
+     return res.status(404).json({ message: "user not found" });
+
+    }
+    await textModal.findByIdAndUpdate(data._id, { text });
+    res.status(200).json({ message: "copied!!" });
+  } catch (error) {
+    throw error;
+  }
+});
+
+app.post("/create-user", async (req, res) => {
+  try {
+    const { username } = req.body;
+    const data = await textModal.findOne({ username });
+    if (data) {
+     return res.status(404).json({
+        message:
+          "user already exists with the specified username, please try with another username.",
+      });
+    }
+    await textModal.create({ username, text: "" });
+    res.status(200).json({ message: "user created" });
+  } catch (error) {
+    throw error;
+  }
+});
+
+app.use((error, req, res, next) => {
+  res.status(500).json({ message: error.message || "Server error" });
 });
 
 app.listen(port, () => {
