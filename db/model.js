@@ -7,7 +7,7 @@ const textSchema = new mongoose.Schema({
   },
   text: {
     type: String,
-    max: 30000,
+    max: 30000
   },
 });
 
