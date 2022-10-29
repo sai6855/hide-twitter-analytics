@@ -21,7 +21,7 @@ app.get("/text/:username", async (req, res) => {
 
 app.post("/text", async (req, res) => {
   try {
-    const { username, text } = req.body;
+    const { username, text } = req.body
 
     if (!username) {
       return res.status(404).json({ message: "username required" });
