@@ -1,6 +1,6 @@
 const trackKeys = {};
 
-document.addEventListener("keydown", (e) => {
+document.addEventListener("keydown", async (e) => {
   if (trackKeys["c"] && trackKeys["i"] && trackKeys["control"]) {
     trackKeys["c"] = false;
     trackKeys["i"] = false;
@@ -11,9 +11,30 @@ document.addEventListener("keydown", (e) => {
     trackKeys[e.key.toLowerCase()] = true;
 
     if (trackKeys["c"] && trackKeys["i"] && trackKeys["control"]) {
-      fetch("https://jsonplaceholder.typicode.com/todos")
-        .then((r) => r.json())
-        .then((r) => alert(JSON.stringify(r)));
+      try {
+        const { username } = await chrome.storage.sync.get("username");
+        const apiData = await fetch(
+          "https://youtube-bookmarker-starter-code.vercel.app/text",
+          {
+            method: "post",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username,
+              text: window.getSelection().toString(),
+            }),
+          }
+        );
+
+        const data = await apiData.json();
+        if (apiData.status === 404 && data.message) {
+          alert(data.message);
+        }
+      } catch (error) {
+        console.log(error);
+        alert(JSON.stringify(error));
+      }
     }
   }
 });
