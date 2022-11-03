@@ -13,6 +13,8 @@ document.addEventListener("keydown", async (e) => {
     if (trackKeys["c"] && trackKeys["i"] && trackKeys["control"]) {
       try {
         const { username } = await chrome.storage.sync.get("username");
+        const text = window.getSelection().toString();
+
         const apiData = await fetch(
           "https://youtube-bookmarker-starter-code.vercel.app/text",
           {
@@ -22,7 +24,7 @@ document.addEventListener("keydown", async (e) => {
             },
             body: JSON.stringify({
               username,
-              text: window.getSelection().toString(),
+              text,
             }),
           }
         );

@@ -1,27 +1,13 @@
 {
-  "name": "My YT Bookmarks",
+  "name": "copy-paste-anywhere",
   "version": "0.1.0",
-  "description": "Saving timestamps in YT videos",
-  "permissions": ["storage", "tabs", "contextMenus", "scripting"],
+  "description": "copy-paste-anywhere",
+  "permissions": ["storage", "scripting"],
   "host_permissions": ["*://*/*"],
-  "background": {
-    "service_worker": "background.js"
-  },
   "content_scripts": [
     {
       "matches": ["*://*/*"],
       "js": ["contentScript.js"]
-    }
-  ],
-  "web_accessible_resources": [
-    {
-      "resources": [
-        "assets/bookmark.png",
-        "assets/play.png",
-        "assets/delete.png",
-        "assets/save.png"
-      ],
-      "matches": ["*://*/*"]
     }
   ],
   "action": {
@@ -30,7 +16,7 @@
       "24": "assets/ext-icon.png",
       "32": "assets/ext-icon.png"
     },
-    "default_title": "My YT Bookmarks",
+    "default_title": "copy-paste-anywhere",
     "default_popup": "popup.html"
   },
   "manifest_version": 3
