@@ -1,30 +1,12 @@
 {
-  "name": "copy-paste-anywhere",
+  "name": "hide-twitter-analytics",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sai6855/youtube-bookmarker-starter-code.git"
+    "url": "git+https://github.com/sai6855/hide-twitter-analytics.git"
   },
   "author": "sai6855",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/sai6855/youtube-bookmarker-starter-code/issues"
-  },
-  "homepage": "https://github.com/sai6855/youtube-bookmarker-starter-code#readme",
-  "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "mongodb": "^4.11.0",
-    "mongoose": "^5.10.18"
-  },
-  "devDependencies": {
-    "nodemon": "^1.1.2"
-  }
+  "license": "ISC"
 }

@@ -1,5 +1,5 @@
 {
-  "name": "copy-paste-anywhere",
+  "name": "hide-twitter-analytics",
   "version": "0.1.0",
   "description": "copy-paste-anywhere",
   "permissions": ["storage", "scripting"],
@@ -11,11 +11,6 @@
     }
   ],
   "action": {
-    "default_icon": {
-      "16": "assets/ext-icon.png",
-      "24": "assets/ext-icon.png",
-      "32": "assets/ext-icon.png"
-    },
     "default_title": "copy-paste-anywhere",
     "default_popup": "popup.html"
   },
