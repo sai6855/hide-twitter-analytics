@@ -12,7 +12,9 @@ Clone the repo with git
 git clone https://github.com/sai6855/hide-twitter-analytics
 ```
 
-After Installation follow below steps
+# If git is not installed then
+ - Download zip
+ - Unzip
 
 
 ## Steps to configure
