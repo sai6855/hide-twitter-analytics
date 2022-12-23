@@ -13,7 +13,7 @@ git clone https://github.com/sai6855/hide-twitter-analytics
 ```
 
 # If git is not installed then
- - Download zip
+ - Download zip by clicking on code button 
  - Unzip
 
 
