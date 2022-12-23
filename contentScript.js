@@ -3,7 +3,7 @@ window.addEventListener("scroll", () => {
   for (let i = 0; i < links.length; i++) {
     if (window.location.href.includes("twitter.com"))
       if (links[i].href.includes("analytics")) {
-        links[i].style.display = "none";
+        links[i].parentElement.style.display = "none";
       }
   }
 });
